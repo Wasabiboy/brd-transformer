@@ -40,10 +40,11 @@ const TRANSFORM_PROMPTS: Record<TransformOption, string> = {
 - Keep it scannable and well-organized.
 - Preserve all important information.`,
 
-  "remove-ai": `Remove any indication that this document was written or assisted by AI.
-- Strip phrases like "As an AI...", "I'll help you...", "Certainly!", "Here's...", "Let me...".
-- Remove overly formal or templated openings and closings.
-- Make it sound like a human analyst wrote it.
+  "remove-ai": `Rewrite this document so it reads as plain text written by a professional human—no AI-style writing.
+- Strip AI-style phrases: "As an AI...", "I'll help you...", "Certainly!", "Here's...", "Let me...".
+- Remove templated or overly formal openings and closings.
+- Write in clear, direct prose as a skilled analyst or consultant would—confident, natural, professional.
+- Output plain text only: no Markdown (no #, **, bullet symbols, or formatting syntax).
 - Preserve all substantive content and requirements.`,
 };
 

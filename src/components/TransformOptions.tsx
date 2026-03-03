@@ -26,7 +26,7 @@ const OPTIONS: { id: TransformOption; label: string; desc: string }[] = [
   {
     id: "remove-ai",
     label: "Remove AI indicators",
-    desc: "Strip AI-sounding phrases and templated language",
+    desc: "Plain text, professional human tone—no AI-style or Markdown",
   },
 ];
 

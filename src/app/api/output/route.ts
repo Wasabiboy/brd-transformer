@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
 
     if (format === "text") {
       const buffer = generateTextFile(text);
-      return new NextResponse(buffer, {
+      return new NextResponse(new Uint8Array(buffer), {
         headers: {
           "Content-Type": "text/plain; charset=utf-8",
           "Content-Disposition": `attachment; filename="brd-transformed.txt"`,
@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
 
     if (format === "pdf") {
       const buffer = generatePDF(text);
-      return new NextResponse(buffer, {
+      return new NextResponse(new Uint8Array(buffer), {
         headers: {
           "Content-Type": "application/pdf",
           "Content-Disposition": `attachment; filename="brd-transformed.pdf"`,
@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
       if (error) {
         return NextResponse.json({ error }, { status: 500 });
       }
-      return new NextResponse(audio, {
+      return new NextResponse(new Uint8Array(audio), {
         headers: {
           "Content-Type": "audio/mpeg",
           "Content-Disposition": `attachment; filename="brd-transformed.mp3"`,

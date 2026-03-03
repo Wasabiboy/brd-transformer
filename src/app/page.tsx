@@ -7,11 +7,20 @@ import { OutputSection } from "@/components/OutputSection";
 import { VoiceSelector } from "@/components/VoiceSelector";
 import type { TransformOption } from "@/lib/transform";
 
+const OPTION_LABELS: Record<TransformOption, string> = {
+  tldr: "TLDR",
+  podcast: "Podcast / Audiobook",
+  "human-readable": "Human Readable",
+  bullets: "Bullet Points",
+  "remove-ai": "Plain Text (No AI indicators)",
+};
+
 export default function Home() {
   const [file, setFile] = useState<File | null>(null);
   const [pastedText, setPastedText] = useState("");
   const [options, setOptions] = useState<TransformOption[]>([]);
   const [output, setOutput] = useState("");
+  const [appliedOptions, setAppliedOptions] = useState<TransformOption[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [voiceId, setVoiceId] = useState("cV3ZSsO9NjgLjLK3FmNC"); // Phil Wesley-Brown
@@ -39,6 +48,7 @@ export default function Home() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Transform failed");
       setOutput(data.text);
+      setAppliedOptions(options);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
@@ -48,11 +58,16 @@ export default function Home() {
 
   const download = async (format: "text" | "pdf" | "mp3") => {
     if (!output) return;
+    const header =
+      appliedOptions.length > 0
+        ? `Transformed to: ${appliedOptions.map((o) => OPTION_LABELS[o]).join(", ")}\n\n`
+        : "";
+    const textForDoc = format !== "mp3" ? header + output : output;
     const res = await fetch("/api/output", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        text: output,
+        text: textForDoc,
         format,
         ...(format === "mp3" && voiceId ? { voice_id: voiceId } : {}),
       }),

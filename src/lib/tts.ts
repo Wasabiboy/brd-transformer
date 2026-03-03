@@ -13,7 +13,8 @@ async function streamToBuffer(stream: Readable): Promise<Buffer> {
 
 export async function textToSpeech(
   text: string,
-  apiKey?: string
+  apiKey?: string,
+  voiceId?: string
 ): Promise<{ audio: Buffer; error?: string }> {
   const key = apiKey || process.env.ELEVENLABS_API_KEY;
   if (!key) {
@@ -34,9 +35,10 @@ export async function textToSpeech(
       textChunks.push(text.slice(i, i + chunkSize));
     }
 
+    const voice = voiceId || DEFAULT_VOICE_ID;
     const audioChunks: Buffer[] = [];
     for (const textChunk of textChunks) {
-      const stream = await client.textToSpeech.convert(DEFAULT_VOICE_ID, {
+      const stream = await client.textToSpeech.convert(voice, {
         text: textChunk,
         model_id: "eleven_turbo_v2_5",
         output_format: "mp3_44100_128",

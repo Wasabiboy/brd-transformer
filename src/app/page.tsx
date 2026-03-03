@@ -4,6 +4,7 @@ import { useState } from "react";
 import { DocumentDropzone } from "@/components/DocumentDropzone";
 import { TransformOptions } from "@/components/TransformOptions";
 import { OutputSection } from "@/components/OutputSection";
+import { VoiceSelector } from "@/components/VoiceSelector";
 import type { TransformOption } from "@/lib/transform";
 
 export default function Home() {
@@ -13,6 +14,7 @@ export default function Home() {
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [voiceId, setVoiceId] = useState("");
 
   const hasInput = (file && file.size > 0) || pastedText.trim().length > 0;
 
@@ -49,7 +51,11 @@ export default function Home() {
     const res = await fetch("/api/output", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: output, format }),
+      body: JSON.stringify({
+        text: output,
+        format,
+        ...(format === "mp3" && voiceId ? { voice_id: voiceId } : {}),
+      }),
     });
     if (!res.ok) {
       const data = await res.json();
@@ -99,6 +105,17 @@ export default function Home() {
           <TransformOptions
             selected={options}
             onChange={setOptions}
+            disabled={loading}
+          />
+        </section>
+
+        <section>
+          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-slate-500">
+            Audio voice
+          </h2>
+          <VoiceSelector
+            value={voiceId}
+            onChange={setVoiceId}
             disabled={loading}
           />
         </section>

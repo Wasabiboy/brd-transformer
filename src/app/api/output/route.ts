@@ -5,7 +5,11 @@ import { textToSpeech } from "@/lib/tts";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { text, format } = body as { text: string; format: "text" | "pdf" | "mp3" };
+    const { text, format, voice_id } = body as {
+      text: string;
+      format: "text" | "pdf" | "mp3";
+      voice_id?: string;
+    };
 
     if (!text || typeof text !== "string") {
       return NextResponse.json(
@@ -42,7 +46,7 @@ export async function POST(req: NextRequest) {
     }
 
     if (format === "mp3") {
-      const { audio, error } = await textToSpeech(text);
+      const { audio, error } = await textToSpeech(text, undefined, voice_id);
       if (error) {
         return NextResponse.json({ error }, { status: 500 });
       }

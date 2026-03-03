@@ -1,7 +1,7 @@
 import { ElevenLabsClient } from "elevenlabs";
 import { Readable } from "stream";
 
-const DEFAULT_VOICE_ID = "pNInz6obpgDQGcFmaJgB"; // "Adam" - professional narrator
+const DEFAULT_VOICE_ID = "cV3ZSsO9NjgLjLK3FmNC"; // "Phil Wesley-Brown"
 
 async function streamToBuffer(stream: Readable): Promise<Buffer> {
   const chunks: Buffer[] = [];

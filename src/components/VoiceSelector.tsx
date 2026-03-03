@@ -31,7 +31,8 @@ export function VoiceSelector({
       .then((data) => {
         setVoices(data.voices || []);
         if (data.voices?.length && !value) {
-          onChange(data.voices[0].voice_id);
+          const phil = data.voices.find((v: Voice) => v.voice_id === "cV3ZSsO9NjgLjLK3FmNC");
+          onChange(phil ? phil.voice_id : data.voices[0].voice_id);
         }
       })
       .catch(() => setVoices([]))

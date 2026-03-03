@@ -14,7 +14,7 @@ export default function Home() {
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [voiceId, setVoiceId] = useState("");
+  const [voiceId, setVoiceId] = useState("cV3ZSsO9NjgLjLK3FmNC"); // Phil Wesley-Brown
 
   const hasInput = (file && file.size > 0) || pastedText.trim().length > 0;
 
@@ -109,16 +109,18 @@ export default function Home() {
           />
         </section>
 
-        <section>
-          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-slate-500">
-            Audio voice
-          </h2>
-          <VoiceSelector
-            value={voiceId}
-            onChange={setVoiceId}
-            disabled={loading}
-          />
-        </section>
+        {options.includes("podcast") && (
+          <section>
+            <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-slate-500">
+              Audio voice
+            </h2>
+            <VoiceSelector
+              value={voiceId}
+              onChange={setVoiceId}
+              disabled={loading}
+            />
+          </section>
+        )}
 
         <div className="flex flex-col gap-3">
           <button

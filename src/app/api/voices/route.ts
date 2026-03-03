@@ -3,8 +3,8 @@ import { ElevenLabsClient } from "elevenlabs";
 
 // Curated voices including Phil - used as fallback or when API returns empty
 const CURATED_VOICES = [
+  { voice_id: "cV3ZSsO9NjgLjLK3FmNC", name: "Phil Wesley-Brown" },
   { voice_id: "pNInz6obpgDQGcFmaJgB", name: "Adam" },
-  { voice_id: "cV3ZSsO9NjgLjLK3FmNC", name: "Phil" },
   { voice_id: "21m00Tcm4TlvDq8ikWAM", name: "Rachel" },
   { voice_id: "EXAVITQu4vr4xnSDxMaL", name: "Bella" },
   { voice_id: "ErXwobaYiN019PkySvjV", name: "Antoni" },
@@ -46,6 +46,12 @@ export async function GET() {
         });
       }
     }
+
+    // Phil Wesley-Brown first
+    const philId = "cV3ZSsO9NjgLjLK3FmNC";
+    voices.sort((a, b) =>
+      a.voice_id === philId ? -1 : b.voice_id === philId ? 1 : 0
+    );
 
     return NextResponse.json({ voices });
   } catch (err) {

@@ -145,13 +145,7 @@ export default function Home() {
       </div>
 
       <footer className="mt-16 border-t border-slate-800 pt-8 text-center text-xs text-slate-500">
-        <p>
-          Requires OpenAI (GPT-4) and ElevenLabs API keys for AI transformation
-          and audio. Set{" "}
-          <code className="rounded bg-slate-800 px-1">OPENAI_API_KEY</code> and{" "}
-          <code className="rounded bg-slate-800 px-1">ELEVENLABS_API_KEY</code>{" "}
-          in <code className="rounded bg-slate-800 px-1">.env.local</code>
-        </p>
+        <p>Created by Phil Wesley-Brown</p>
       </footer>
     </main>
   );

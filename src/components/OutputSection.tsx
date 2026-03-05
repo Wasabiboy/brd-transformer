@@ -1,6 +1,6 @@
 "use client";
 
-import { FileText, FileDown, Music } from "lucide-react";
+import { FileText, FileDown, Music, Loader2, FileEdit } from "lucide-react";
 
 type OutputSectionProps = {
   text: string;
@@ -15,9 +15,20 @@ export function OutputSection({
 }: OutputSectionProps) {
   if (loading) {
     return (
-      <div className="rounded-xl border border-rilo-border bg-rilo-card/80 p-6">
-        <p className="text-rilo-muted">Transforming document...</p>
-        <div className="mt-3 h-2 w-48 animate-pulse rounded-full bg-rilo-border" />
+      <div className="rounded-xl border border-rilo-border bg-rilo-card/80 p-8">
+        <div className="flex flex-col items-center justify-center gap-5">
+          <div className="relative">
+            <div className="absolute -inset-3 animate-pulse rounded-full bg-rilo-accent/10" />
+            <div className="relative flex h-16 w-16 items-center justify-center">
+              <FileEdit className="h-10 w-10 text-rilo-accent" />
+              <Loader2 className="absolute h-7 w-7 text-rilo-accent animate-spin" />
+            </div>
+          </div>
+          <p className="text-sm font-medium text-stone-300">Transforming document...</p>
+          <div className="h-1.5 w-64 overflow-hidden rounded-full bg-rilo-border">
+            <div className="h-full w-1/3 animate-shimmer rounded-full bg-rilo-accent" />
+          </div>
+        </div>
       </div>
     );
   }

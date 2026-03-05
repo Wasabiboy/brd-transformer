@@ -17,9 +17,18 @@ const config: Config = {
           bg: "#0f0f0f",
           card: "#1a1a1a",
           border: "#2a2a2a",
-          accent: "#d4a574",
-          muted: "#78716c",
+          accent: "#06b6d4",
+          muted: "#94a3b8",
         },
+      },
+      keyframes: {
+        shimmer: {
+          "0%, 100%": { transform: "translateX(-100%)" },
+          "50%": { transform: "translateX(250%)" },
+        },
+      },
+      animation: {
+        shimmer: "shimmer 1.5s ease-in-out infinite",
       },
     },
   },

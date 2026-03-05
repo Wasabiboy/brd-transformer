@@ -1,32 +1,43 @@
 "use client";
 
+import { Zap, Headphones, BookOpen, List, Sparkles, Hash } from "lucide-react";
 import type { TransformOption } from "@/lib/transform";
 
-const MAIN_OPTIONS: { id: TransformOption; label: string; desc: string }[] = [
+const MAIN_OPTIONS: {
+  id: TransformOption;
+  label: string;
+  desc: string;
+  icon: React.ComponentType<{ className?: string }>;
+}[] = [
   {
     id: "tldr",
     label: "TL;DR",
     desc: "Condensed executive summary with core essence and key highlights",
+    icon: Zap,
   },
   {
     id: "podcast",
     label: "Podcast / audiobook style",
     desc: "Professional speaker tone, conversational, ideal for audio",
+    icon: Headphones,
   },
   {
     id: "human-readable",
     label: "Human-readable",
     desc: "Remove AI jargon, plain English, natural phrasing",
+    icon: BookOpen,
   },
   {
     id: "bullets",
     label: "Bullet points",
     desc: "Convert tables to bullets, scannable structure",
+    icon: List,
   },
   {
     id: "remove-ai",
     label: "Remove AI indicators",
     desc: "Plain text, professional human tone—no AI-style writing",
+    icon: Sparkles,
   },
 ];
 
@@ -81,8 +92,9 @@ export function TransformOptions({
                 checked={mainSelected === opt.id}
                 onChange={() => selectMain(opt.id)}
                 disabled={disabled}
-                className="mt-0.5 h-4 w-4 border-rilo-border text-rilo-accent focus:ring-rilo-accent"
+                className="mt-0.5 h-4 w-4 shrink-0 border-rilo-border text-rilo-accent focus:ring-rilo-accent"
               />
+              <opt.icon className="mt-0.5 h-5 w-5 shrink-0 text-rilo-muted" />
               <div>
                 <span className="text-sm font-medium text-stone-200">
                   {opt.label}
@@ -106,8 +118,9 @@ export function TransformOptions({
             checked={markdownSelected}
             onChange={toggleMarkdown}
             disabled={disabled}
-            className="mt-0.5 h-4 w-4 rounded border-rilo-border text-rilo-accent focus:ring-rilo-accent"
+            className="mt-0.5 h-4 w-4 shrink-0 rounded border-rilo-border text-rilo-accent focus:ring-rilo-accent"
           />
+          <Hash className="mt-0.5 h-5 w-5 shrink-0 text-rilo-muted" />
           <div>
             <span className="text-sm font-medium text-stone-200">
               + Markdown format

@@ -95,7 +95,7 @@ export default function Home() {
         aria-hidden
       />
       <div className="fixed inset-0 -z-10 bg-black/80" aria-hidden />
-      <div className="relative mx-auto max-w-3xl px-4 py-12">
+      <div className="relative mx-auto max-w-3xl border border-white/30 px-4 py-12">
       <header className="mb-10 text-center">
         <h1 className="mb-2 font-display text-3xl font-bold tracking-tight text-stone-50">
           BRD Transformer

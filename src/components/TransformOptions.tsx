@@ -46,7 +46,7 @@ export function TransformOptions({
 
   const selectMain = (id: TransformOption) => {
     if (disabled) return;
-    const newOptions = markdownSelected ? [id, "markdown"] : [id];
+    const newOptions: TransformOption[] = markdownSelected ? ([id, "markdown"] as TransformOption[]) : [id];
     onChange(newOptions);
   };
 
@@ -55,7 +55,7 @@ export function TransformOptions({
     if (markdownSelected) {
       onChange(mainSelected ? [mainSelected] : []);
     } else {
-      onChange(mainSelected ? [mainSelected, "markdown"] : ["markdown"]);
+      onChange(mainSelected ? [mainSelected, "markdown"] : (["markdown"] as TransformOption[]));
     }
   };
 

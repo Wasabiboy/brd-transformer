@@ -14,20 +14,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className="font-sans antialiased min-h-screen bg-[var(--background)] text-[var(--foreground)] relative"
-        style={{
-          backgroundImage: "url(/doc-transform-bg.png)",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundAttachment: "fixed",
-        }}
-      >
-        <div
-          className="absolute inset-0 bg-black/80"
-          aria-hidden
-        />
-        <div className="relative">{children}</div>
+      <body className="font-sans antialiased min-h-screen bg-[var(--background)] text-[var(--foreground)]">
+        {children}
       </body>
     </html>
   );

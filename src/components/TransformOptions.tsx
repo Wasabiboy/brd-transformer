@@ -2,7 +2,7 @@
 
 import type { TransformOption } from "@/lib/transform";
 
-const OPTIONS: { id: TransformOption; label: string; desc: string }[] = [
+const MAIN_OPTIONS: { id: TransformOption; label: string; desc: string }[] = [
   {
     id: "tldr",
     label: "TL;DR",
@@ -26,7 +26,7 @@ const OPTIONS: { id: TransformOption; label: string; desc: string }[] = [
   {
     id: "remove-ai",
     label: "Remove AI indicators",
-    desc: "Plain text, professional human tone—no AI-style or Markdown",
+    desc: "Plain text, professional human tone—no AI-style writing",
   },
 ];
 
@@ -41,45 +41,82 @@ export function TransformOptions({
   onChange,
   disabled,
 }: TransformOptionsProps) {
-  const toggle = (id: TransformOption) => {
+  const mainSelected = selected.find((o) => o !== "markdown");
+  const markdownSelected = selected.includes("markdown");
+
+  const selectMain = (id: TransformOption) => {
     if (disabled) return;
-    if (selected.includes(id)) {
-      onChange(selected.filter((o) => o !== id));
+    const newOptions = markdownSelected ? [id, "markdown"] : [id];
+    onChange(newOptions);
+  };
+
+  const toggleMarkdown = () => {
+    if (disabled) return;
+    if (markdownSelected) {
+      onChange(mainSelected ? [mainSelected] : []);
     } else {
-      onChange([...selected, id]);
+      onChange(mainSelected ? [mainSelected, "markdown"] : ["markdown"]);
     }
   };
 
   return (
-    <div className="space-y-2">
-      <p className="text-sm font-medium text-slate-300">
-        Transformation options (select any)
-      </p>
-      <div className="grid gap-2 sm:grid-cols-2">
-        {OPTIONS.map((opt) => (
-          <label
-            key={opt.id}
-            className={`
-              flex cursor-pointer items-start gap-3 rounded-lg border p-3 transition
-              ${selected.includes(opt.id) ? "border-cyan-500 bg-cyan-500/10" : "border-slate-600 bg-slate-900/50 hover:border-slate-500"}
-              ${disabled ? "cursor-not-allowed opacity-50" : ""}
-            `}
-          >
-            <input
-              type="checkbox"
-              checked={selected.includes(opt.id)}
-              onChange={() => toggle(opt.id)}
-              disabled={disabled}
-              className="mt-0.5 h-4 w-4 rounded border-slate-600 text-cyan-500 focus:ring-cyan-500"
-            />
-            <div>
-              <span className="text-sm font-medium text-slate-200">
-                {opt.label}
-              </span>
-              <p className="text-xs text-slate-500">{opt.desc}</p>
-            </div>
-          </label>
-        ))}
+    <div className="space-y-4">
+      <div>
+        <p className="mb-2 text-sm font-medium text-stone-300">
+          Transformation (select one)
+        </p>
+        <div className="grid gap-2 sm:grid-cols-2">
+          {MAIN_OPTIONS.map((opt) => (
+            <label
+              key={opt.id}
+              className={`
+                flex cursor-pointer items-start gap-3 rounded-lg border p-3 transition
+                ${mainSelected === opt.id ? "border-rilo-accent bg-rilo-accent/10" : "border-rilo-border bg-rilo-card/80 hover:border-rilo-muted"}
+                ${disabled ? "cursor-not-allowed opacity-50" : ""}
+              `}
+            >
+              <input
+                type="radio"
+                name="transform-main"
+                checked={mainSelected === opt.id}
+                onChange={() => selectMain(opt.id)}
+                disabled={disabled}
+                className="mt-0.5 h-4 w-4 border-rilo-border text-rilo-accent focus:ring-rilo-accent"
+              />
+              <div>
+                <span className="text-sm font-medium text-stone-200">
+                  {opt.label}
+                </span>
+                <p className="text-xs text-rilo-muted">{opt.desc}</p>
+              </div>
+            </label>
+          ))}
+        </div>
+      </div>
+      <div>
+        <label
+          className={`
+            flex cursor-pointer items-start gap-3 rounded-lg border p-3 transition
+            ${markdownSelected ? "border-rilo-accent bg-rilo-accent/10" : "border-rilo-border bg-rilo-card/80 hover:border-rilo-muted"}
+            ${disabled ? "cursor-not-allowed opacity-50" : ""}
+          `}
+        >
+          <input
+            type="checkbox"
+            checked={markdownSelected}
+            onChange={toggleMarkdown}
+            disabled={disabled}
+            className="mt-0.5 h-4 w-4 rounded border-rilo-border text-rilo-accent focus:ring-rilo-accent"
+          />
+          <div>
+            <span className="text-sm font-medium text-stone-200">
+              + Markdown format
+            </span>
+            <p className="text-xs text-rilo-muted">
+              Optional. Use Markdown (headers, bold, lists) in output.
+            </p>
+          </div>
+        </label>
       </div>
     </div>
   );

@@ -82,7 +82,7 @@ export function VoiceSelector({
 
   if (loading) {
     return (
-      <div className="flex items-center gap-2 text-sm text-slate-500">
+      <div className="flex items-center gap-2 text-sm text-rilo-muted">
         <Loader2 className="h-4 w-4 animate-spin" />
         Loading voices...
       </div>
@@ -93,7 +93,7 @@ export function VoiceSelector({
 
   return (
     <div className="space-y-2">
-      <p className="text-sm font-medium text-slate-300">
+      <p className="text-sm font-medium text-stone-300">
         MP3 voice (for podcast/audiobook output)
       </p>
       <div className="flex flex-wrap gap-2">
@@ -102,14 +102,14 @@ export function VoiceSelector({
             key={voice.voice_id}
             className={`flex items-center gap-2 rounded-lg border px-3 py-2 transition ${
               value === voice.voice_id
-                ? "border-cyan-500 bg-cyan-500/10"
-                : "border-slate-600 bg-slate-900/50 hover:border-slate-500"
+                ? "border-rilo-accent bg-rilo-accent/10"
+                : "border-rilo-border bg-rilo-card/80 hover:border-rilo-muted"
             } ${disabled ? "opacity-50" : ""}`}
           >
             <button
               type="button"
               onClick={() => !disabled && onChange(voice.voice_id)}
-              className="text-left text-sm font-medium text-slate-200"
+              className="text-left text-sm font-medium text-stone-200"
             >
               {voice.name}
             </button>
@@ -117,7 +117,7 @@ export function VoiceSelector({
               type="button"
               onClick={() => !disabled && playSample(voice)}
               disabled={disabled}
-              className="rounded p-1 text-slate-400 hover:bg-slate-700 hover:text-cyan-400"
+              className="rounded p-1 text-rilo-muted hover:bg-rilo-card hover:text-rilo-accent"
               title="Play sample"
             >
               {playingId === voice.voice_id ? (

@@ -46,10 +46,31 @@ export function DocumentDropzone({
 
   return (
     <div className="space-y-3">
+      <div
+        {...getRootProps()}
+        className={`
+          relative flex flex-col items-center justify-center rounded-xl border-2 border-dashed
+          px-6 py-10 transition-all
+          ${isDragActive ? "border-rilo-accent bg-rilo-accent/10" : "border-rilo-border bg-rilo-card/80 hover:border-rilo-muted"}
+          ${disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"}
+        `}
+      >
+        <input {...getInputProps()} />
+        <Upload className="mb-3 h-10 w-10 text-rilo-muted" />
+        <p className="mb-1 text-center text-sm font-medium text-stone-300">
+          {isDragActive
+            ? "Drop your document here"
+            : "Drag & drop PDF or Word document"}
+        </p>
+        <p className="text-center text-xs text-rilo-muted">
+          or click to browse — .pdf, .docx, .doc
+        </p>
+      </div>
+
       {documentLoaded && (
-        <div className="flex items-center gap-2 rounded-lg border border-cyan-500/50 bg-cyan-500/10 px-4 py-3">
-          <CheckCircle2 className="h-5 w-5 shrink-0 text-cyan-500" />
-          <span className="text-sm font-medium text-cyan-200">
+        <div className="flex items-center gap-2 rounded-lg border border-rilo-accent/50 bg-rilo-accent/10 px-4 py-3">
+          <CheckCircle2 className="h-5 w-5 shrink-0 text-rilo-accent" />
+          <span className="text-sm font-medium text-stone-200">
             {hasFile ? (
               <>
                 Document loaded: <span className="text-white">{file!.name}</span>
@@ -63,35 +84,15 @@ export function DocumentDropzone({
           </span>
         </div>
       )}
-      <div
-        {...getRootProps()}
-        className={`
-          relative flex flex-col items-center justify-center rounded-xl border-2 border-dashed
-          px-6 py-10 transition-all
-          ${isDragActive ? "border-cyan-500 bg-cyan-500/10" : "border-slate-600 bg-slate-900/50 hover:border-slate-500"}
-          ${disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"}
-        `}
-      >
-        <input {...getInputProps()} />
-        <Upload className="mb-3 h-10 w-10 text-slate-400" />
-        <p className="mb-1 text-center text-sm font-medium text-slate-300">
-          {isDragActive
-            ? "Drop your document here"
-            : "Drag & drop PDF or Word document"}
-        </p>
-        <p className="text-center text-xs text-slate-500">
-          or click to browse — .pdf, .docx, .doc
-        </p>
-      </div>
 
       {acceptPaste && (
         <div className="relative">
           <div className="absolute inset-y-0 left-3 flex items-center">
-            <FileText className="h-4 w-4 text-slate-500" />
+            <FileText className="h-4 w-4 text-rilo-muted" />
           </div>
           <textarea
             placeholder="Or paste your text here..."
-            className="w-full rounded-lg border border-slate-600 bg-slate-900/50 px-10 py-3 text-sm text-slate-200 placeholder-slate-500 focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500 disabled:opacity-50"
+            className="w-full rounded-lg border border-rilo-border bg-rilo-card/80 px-10 py-3 text-sm text-stone-200 placeholder-rilo-muted focus:border-rilo-accent focus:outline-none focus:ring-1 focus:ring-rilo-accent disabled:opacity-50"
             rows={4}
             onChange={(e) => onPaste?.(e.target.value)}
             disabled={disabled}

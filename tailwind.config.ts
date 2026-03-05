@@ -10,11 +10,15 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ["system-ui", "Segoe UI", "sans-serif"],
+        display: ["system-ui", "Segoe UI", "sans-serif"],
       },
       colors: {
-        slate: {
-          850: "#172033",
-          950: "#0d1321",
+        rilo: {
+          bg: "#0f0f0f",
+          card: "#1a1a1a",
+          border: "#2a2a2a",
+          accent: "#d4a574",
+          muted: "#78716c",
         },
       },
     },

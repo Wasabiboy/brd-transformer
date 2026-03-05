@@ -13,6 +13,7 @@ const OPTION_LABELS: Record<TransformOption, string> = {
   "human-readable": "Human Readable",
   bullets: "Bullet Points",
   "remove-ai": "Plain Text (No AI indicators)",
+  markdown: "Markdown",
 };
 
 export default function Home() {
@@ -87,12 +88,19 @@ export default function Home() {
   };
 
   return (
-    <main className="mx-auto min-h-screen max-w-3xl px-4 py-12">
+    <main className="relative min-h-screen">
+      <div
+        className="fixed inset-0 -z-20 bg-cover bg-center"
+        style={{ backgroundImage: "url(/doc-transform-bg.png)" }}
+        aria-hidden
+      />
+      <div className="fixed inset-0 -z-10 bg-black/80" aria-hidden />
+      <div className="relative mx-auto max-w-3xl px-4 py-12">
       <header className="mb-10 text-center">
-        <h1 className="mb-2 text-3xl font-bold tracking-tight text-white">
+        <h1 className="mb-2 font-display text-3xl font-bold tracking-tight text-stone-50">
           BRD Transformer
         </h1>
-        <p className="text-slate-400">
+        <p className="text-rilo-muted">
           Turn template-driven business requirement documents into TLDR, podcast
           style, or human-readable formats
         </p>
@@ -100,7 +108,7 @@ export default function Home() {
 
       <div className="space-y-8">
         <section>
-          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-slate-500">
+          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-rilo-muted">
             Input
           </h2>
           <DocumentDropzone
@@ -114,7 +122,7 @@ export default function Home() {
         </section>
 
         <section>
-          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-slate-500">
+          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-rilo-muted">
             Transformation options
           </h2>
           <TransformOptions
@@ -126,7 +134,7 @@ export default function Home() {
 
         {options.includes("podcast") && (
           <section>
-            <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-slate-500">
+            <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-rilo-muted">
               Audio voice
             </h2>
             <VoiceSelector
@@ -141,7 +149,7 @@ export default function Home() {
           <button
             onClick={transform}
             disabled={!hasInput || options.length === 0 || loading}
-            className="w-full rounded-xl bg-cyan-600 py-3 font-semibold text-white transition hover:bg-cyan-500 disabled:cursor-not-allowed disabled:opacity-50"
+            className="w-full rounded-xl bg-rilo-accent py-3 font-semibold text-stone-900 transition hover:bg-rilo-accent/90 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {loading ? "Transforming…" : "Transform document"}
           </button>
@@ -159,9 +167,10 @@ export default function Home() {
         </section>
       </div>
 
-      <footer className="mt-16 border-t border-slate-800 pt-8 text-center text-xs text-slate-500">
+      <footer className="mt-16 border-t border-rilo-border pt-8 text-center text-xs text-rilo-muted">
         <p>Created by Phil Wesley-Brown</p>
       </footer>
+      </div>
     </main>
   );
 }

@@ -5,7 +5,8 @@ export type TransformOption =
   | "podcast"
   | "human-readable"
   | "bullets"
-  | "remove-ai";
+  | "remove-ai"
+  | "markdown";
 
 export type TransformConfig = {
   options: TransformOption[];
@@ -44,14 +45,20 @@ const TRANSFORM_PROMPTS: Record<TransformOption, string> = {
 - Strip AI-style phrases: "As an AI...", "I'll help you...", "Certainly!", "Here's...", "Let me...".
 - Remove templated or overly formal openings and closings.
 - Write in clear, direct prose as a skilled analyst or consultant would—confident, natural, professional.
-- Output plain text only: no Markdown (no #, **, bullet symbols, or formatting syntax).
 - Preserve all substantive content and requirements.`,
+
+  markdown: `Format the output using Markdown: use # for headers, ** for bold, - for bullet lists, etc.`,
 };
 
 function buildSystemPrompt(config: TransformConfig): string {
+  const useMarkdown = config.options.includes("markdown");
+  const formatInstruction = useMarkdown
+    ? "Format output using Markdown (headers, bold, bullet lists, etc.)."
+    : "Output plain text only: no Markdown syntax (no #, **, or formatting). Use simple dashes for lists. No headers or special formatting—just readable prose and plain list items.";
   const parts = [
     "You are an expert at transforming business requirement documents (BRDs) and product requirement documents (PRDs) into audience-friendly formats.",
     "The user will provide a document and a set of transformation options. Apply ALL specified options in a logical order.",
+    `FORMAT: ${formatInstruction}`,
     "Output only the transformed text—no commentary, no meta-explanation.",
   ];
   return parts.join("\n\n");
